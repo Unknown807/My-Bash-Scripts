@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Script to convert images I scan with the IScanner app into a pdf I can submit for work
+
+mkdir backup
+
+i=1
+ls | grep _[0-9][0-9]*.jpg | sort | while read -r line
+do
+    mv $line "page$i.jpg"
+    cp "page$i.jpg" backup
+    ((i=i+1))
+done
+
+pdfName=""
+echo "Enter Name of PDF: "
+read pdfName
+
+convert *.jpg $pdfName.pdf
