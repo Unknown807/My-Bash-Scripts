@@ -1,0 +1,25 @@
+#!/bin/bash
+
+temp=0
+char=""
+
+echo "Enter a starting temp (10s): "
+
+read -t 10 temp
+
+echo "Setting starting temp to $temp"
+
+while [ 1 ]
+do
+    echo "Current Temp $temp"
+    read -t 1 -n 1 char  
+    case "$char" in
+        "a") 
+            ((temp=temp-10))
+            ;;
+        "d")
+            ((temp=temp+10))
+            ;;
+    esac
+    redshift -O $temp 1> /dev/null
+done
