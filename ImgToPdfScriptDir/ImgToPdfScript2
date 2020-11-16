@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Script to convert images I take with my phone to pdf for work.
+# Sometimes I take my pictures rotated accidently, so when converted
+# they appear upside down in the pdf, so I added the ability to
+# rotate them by 180 to cancel out the rotation that happens during the
+# pdf conversion
+
+mkdir backup
+
+i=1
+ls | grep -E '_[0-9]+.jpg' | sort | while read -r line
+do
+    mv $line "page$i.jpg"
+    cp "page$i.jpg" backup
+    ((i=i+1))
+done
+
+flipped=""
+echo "Any accidently flipped images? (y/n)"
+read flipped
+if [ $flipped == "y" ]
+then
+    range=""
+    echo "Enter the range of images (e.g 1,10)"
+    read range
+    IFS=, read j limit <<< $range
+
+    echo "Flipping..."
+    while [[ j -le limit ]]
+    do
+        convert "page$j.jpg" -rotate 180 "page$j.jpg"
+        ((j=j+1))
+    done
+    echo "Done!"
+fi
+
+pdfName=""
+echo "Enter Name of PDF: "
+read pdfName
+
+echo "Converting..."
+convert `ls | grep -E 'page[0-9][0-9]*.jpg' | sort --version-sort` $pdfName.pdf
+echo "Done!"
