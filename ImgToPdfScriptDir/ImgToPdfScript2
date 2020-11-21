@@ -21,6 +21,14 @@ echo "Any accidently flipped images? (y/n)"
 read flipped
 if [ $flipped == "y" ]
 then
+    angle=""
+    echo "What angle do you want to use?"
+    read angle
+    if [ $angle == "" ]
+    then
+        angle="180"
+    fi
+
     range=""
     echo "Enter the range of images (e.g 1,10)"
     read range
@@ -29,7 +37,7 @@ then
     echo "Flipping..."
     while [[ j -le limit ]]
     do
-        convert "page$j.jpg" -rotate 180 "page$j.jpg"
+        convert "page$j.jpg" -rotate $angle "page$j.jpg"
         ((j=j+1))
     done
     echo "Done!"
