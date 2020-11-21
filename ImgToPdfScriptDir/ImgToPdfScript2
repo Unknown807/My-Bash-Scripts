@@ -19,12 +19,12 @@ done
 flipped=""
 echo "Any accidently flipped images? (y/n)"
 read flipped
-if [ $flipped == "y" ]
+if [ "$flipped" == "y" ]
 then
     angle=""
     echo "What angle do you want to use?"
     read angle
-    if [ $angle == "" ]
+    if [ "$angle" == "" ]
     then
         angle="180"
     fi
