@@ -1,0 +1,27 @@
+#!/bin/bash
+
+echo "(1) .tex -> .dvi -> .ps -> .pdf"
+echo "(2) .tex -> .dvi -> .pdf"
+echo "(3) .tex -> .pdf"
+
+method=""
+read method
+
+file=$(basename $(ls | grep -m 1 *.tex) .tex)
+
+case $method in
+	"1")
+		latex "$file.tex"
+		dvips "$file.dvi"
+		ps2pdf "$file.ps"
+		;;
+	"2")
+		latex "$file.tex"
+		dvipdfm "$file.dvi"
+		;;
+	"3")
+		pdflatex "$file.tex"
+		;;
+esac
+
+echo "Done!"
